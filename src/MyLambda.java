@@ -119,4 +119,17 @@ public class MyLambda {
         //或 Comparator<Integer> com = (Integer x, Integer y) ->  Integer.compare(x, y);
         System.out.println(com.compare(8,6));
     }
+
+    //对一个数进行运算
+    @Test
+    public void test5() {
+        System.out.println(operational(100, x -> x * x));
+
+        //MyFun mf = x -> x * x;
+        //System.out.println(mf.getValue(100));
+    }
+
+    public Integer operational(Integer num, MyFun mf) {
+        return mf.getValue(num);
+    }
 }
