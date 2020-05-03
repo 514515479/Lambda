@@ -19,7 +19,7 @@ import java.util.function.Consumer;
  *              () -> System.out.println("Hello Lambda!");
  *
  *    语法格式二：有一个参数，并且无返回值（如果只有一个参数，那么小括号可以省略不写）
- *               x -> System.out.println("Hello Lambda!");
+ *              x -> System.out.println("Hello Lambda!");
  *               或
  *              (x) -> System.out.println("Hello Lambda!");
  *
@@ -29,6 +29,9 @@ import java.util.function.Consumer;
  *                  do something...
  *              };
  *    语法格式四：如果Lambda体中只有一条语句，那么return和大括号都可以省略不写
+ *              (x, y) ->  Integer.compare(x, y);
+ *
+ *    语法格式五：Lambda表达式的参数列表的数据类型可以省略不写，因为JVM编译器通过上下文推断出数据类型，即“类型推断”
  **/
 public class MyLambda {
 
@@ -72,9 +75,11 @@ public class MyLambda {
     }
 
     //语法格式四：如果Lambda体中只有一条语句，那么return和大括号都可以省略不写
+    //语法格式五：Lambda表达式的参数列表的数据类型可以省略不写，因为JVM编译器通过上下文推断出数据类型，即“类型推断”
     @Test
     public void test4() {
         Comparator<Integer> com = (x, y) ->  Integer.compare(x, y);
+        //或 Comparator<Integer> com = (Integer x, Integer y) ->  Integer.compare(x, y);
         System.out.println(com.compare(8,6));
     }
 }
