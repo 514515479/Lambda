@@ -5,6 +5,7 @@
 
 import org.junit.Test;
 
+import java.util.Comparator;
 import java.util.function.Consumer;
 
 /**
@@ -17,7 +18,16 @@ import java.util.function.Consumer;
  *    语法格式一：无参数，无返回值
  *              () -> System.out.println("Hello Lambda!");
  *
- *    语法格式二：有一个参数，并且无返回值
+ *    语法格式二：有一个参数，并且无返回值（如果只有一个参数，那么小括号可以省略不写）
+ *               x -> System.out.println("Hello Lambda!");
+ *               或
+ *              (x) -> System.out.println("Hello Lambda!");
+ *
+ *    语法格式三：有两个以上参数，有返回值，并且Lambda体中有多条语句
+ *              (x, y) -> {
+ *                  do something...
+ *                  do something...
+ *              };
  **/
 public class MyLambda {
 
@@ -48,5 +58,15 @@ public class MyLambda {
         Consumer<String> con = (x) -> System.out.println(x);
         //把 “Lambda学习”这个参数传过去，打印输出
         con.accept("Lambda学习");
+    }
+
+    //语法格式三：有两个以上参数，有返回值，并且Lambda体中有多条语句
+    @Test
+    public void test3() {
+        Comparator<Integer> com = (x, y) -> {
+            System.out.println("Hello Lambda!");
+            return Integer.compare(x, y);
+        };
+        System.out.println(com.compare(8,6));
     }
 }
