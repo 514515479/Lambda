@@ -69,7 +69,6 @@ import java.util.function.Consumer;
  *               void sub();
  *           }
  *
- *
  **/
 public class MyLambda {
 
