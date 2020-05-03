@@ -28,6 +28,7 @@ import java.util.function.Consumer;
  *                  do something...
  *                  do something...
  *              };
+ *    语法格式四：如果Lambda体中只有一条语句，那么return和大括号都可以省略不写
  **/
 public class MyLambda {
 
@@ -67,6 +68,13 @@ public class MyLambda {
             System.out.println("Hello Lambda!");
             return Integer.compare(x, y);
         };
+        System.out.println(com.compare(8,6));
+    }
+
+    //语法格式四：如果Lambda体中只有一条语句，那么return和大括号都可以省略不写
+    @Test
+    public void test4() {
+        Comparator<Integer> com = (x, y) ->  Integer.compare(x, y);
         System.out.println(com.compare(8,6));
     }
 }
