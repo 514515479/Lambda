@@ -67,6 +67,8 @@ public class Practice {
     public void test3() {
         longOperational(10L, 20L, (x, y) -> x + y);
         longOperational(10L, 20L, (x, y) -> x * y);
+
+        //TestLong<Long, Long> tl =  (x, y) -> x + y;
     }
 
     //计算long的和，乘积
