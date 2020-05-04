@@ -30,6 +30,10 @@ import java.util.function.Supplier;
  *      ClassName::new
  * 注意：
  *      需要调用的构造器的参数列表要与函数式接口中的抽象方法的参数列表保持一致。
+ *
+ * 三、数组引用：
+ *      Type::new
+ *
  **/
 public class TestMethodRef {
 
@@ -91,5 +95,18 @@ public class TestMethodRef {
         //第二种（有参构造器）注意：调用哪个构造器取决于函数式接口的参数，这里即Function的apply
         Function<String, Employee> fun2 = Employee::new;
         System.out.println(fun2.apply("张三"));
+    }
+
+    //数组引用
+    @Test
+    public void test5() {
+        //第一种
+        Function<Integer, String[]> fun1 = x -> new String[x];
+        String[] str1 = fun1.apply(10);
+        System.out.println(str1.length);
+        //第二种
+        Function<Integer, String[]> fun2 = String[]::new;
+        String[] str2 = fun1.apply(5);
+        System.out.println(str2.length);
     }
 }
