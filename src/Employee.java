@@ -10,8 +10,14 @@ public class Employee {
     private String name;
     private Integer age;
 
+    public Employee() {}
+
     public Employee(String name, Integer age) {
         this.age = age;
+        this.name = name;
+    }
+
+    public Employee(String name) {
         this.name = name;
     }
 }
