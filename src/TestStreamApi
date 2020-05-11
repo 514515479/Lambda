@@ -7,22 +7,34 @@ import java.util.List;
 import java.util.stream.Stream;
 
 /**
- * 1.创建stream
+ * 一、创建stream
+ * 		1.通过Collection集合提供的stream()或parallelStream()
+ * 		2.通过Arrays中的静态方法stream()获得数组流
+ * 		3.通过Stream类中的静态方法of()
+ * 		4.创建无限流
+ * 			a.迭代
+ * 			b.生成
  *
- * 2.中间操作
- * 		筛选与切片
- * 		filter -- 接收Lambda，从流中排除某些元素。
- * 		limit -- 截断流，使其元素不超过给定数量。
- * 		skip(n) -- 跳过元素，返回一个扔掉前n个元素的流。若流中元素不足n个，则返回一个空流。与limit(n)互补。
- * 		distinct -- 筛选。通过流所生成元素的hashCode()和equals()去重
+ * 二、中间操作
  *
+ * 		1.筛选与切片
+ * 			filter -- 接收Lambda，从流中排除某些元素。
+ * 			limit -- 截断流，使其元素不超过给定数量。
+ * 			skip(n) -- 跳过元素，返回一个扔掉前n个元素的流。若流中元素不足n个，则返回一个空流。与limit(n)互补。
+ * 			distinct -- 筛选。通过流所生成元素的hashCode()和equals()去重
  *
- * 3.终止操作（终端操作）
+ * 		2.映射
+ * 			map --接收Lambda，讲元素转换成其他形式或提取信息。接收一个函数作为参数，该函数会被应用到每个元素上，并将其映射成一个新的元素。
+ * 			flatMap -- 接受一个函数作为参数，将流中的每个值都换成另一个流，然后把所有流连接成一个流。
+ *
+ * 		3.排序
+ * 				
+ * 三、终止操作（终端操作）
  *
  **/
 public class TestStreamApi {
 
-	List<Employee> list = new ArrayList<>(Arrays.asList(
+	List<Employee> empList = new ArrayList<>(Arrays.asList(
 			new Employee("张三", 21),
 			new Employee("李四", 22),
 			new Employee("王五", 23),
@@ -33,12 +45,40 @@ public class TestStreamApi {
 			new Employee("狗蛋", 25)
 	));
 
+	//创建stream
+	@Test
+	public void test1() {
+		// 1.通过Collection集合提供的stream()或parallelStream()
+		List<String> list = new ArrayList<>();
+		Stream stream1 = list.stream();
+
+		// 2.通过Arrays中的静态方法stream()获得数组流
+		Employee[] emps = new Employee[10];
+		Stream stream2 = Arrays.stream(emps);
+
+		//3.通过Stream类中的静态方法of()
+		Stream<String> stream3 = Stream.of("aa", "bb", "cc");
+
+		//4.创建无限流
+		//迭代
+		Stream<Integer> stream4 = Stream.iterate(0, x -> x + 1);
+		//从0开始，无限+1
+		//stream4.forEach(System.out::println);
+
+		//生成
+		//生成5个100以内的随机数
+		Stream.generate(() -> (int)(Math.random() * 100))
+				.limit(5)
+				.forEach(System.out::println);
+	}
+
+
 	//内部迭代：迭代操作由 Stream API完成
 	@Test
-	public void Test1() {
+	public void test2() {
 		//返回的是流
 		//中间操作：不会执行任何操作，只是定义逻辑。
-		Stream<Employee> stream = list.stream()
+		Stream<Employee> stream = empList.stream()
 										.filter(x -> {
 
 											System.out.println("中间操作");
@@ -51,8 +91,8 @@ public class TestStreamApi {
 
 	//外部迭代：
 	@Test
-	public void test2() {
-		Iterator<Employee> it = list.iterator();
+	public void test3() {
+		Iterator<Employee> it = empList.iterator();
 		while(it.hasNext()) {
 			System.out.println(it.next());
 		}
@@ -60,8 +100,8 @@ public class TestStreamApi {
 
 	//筛选和切片
 	@Test
-	public void test3() {
-		list.stream()
+	public void test4() {
+		empList.stream()
 				.filter(x -> {
 					//找到结果后，后续就不再执行。和 && || 类似 （单个& | 是全部条件都执行）
 					System.out.println("短路");
@@ -72,10 +112,49 @@ public class TestStreamApi {
 
 		System.out.println("----------------------------------------");
 
-		list.stream()
+		empList.stream()
 				.filter(x -> x.getAge() > 21)
 				//.skip(2)
 				.distinct()
 				.forEach(System.out::println);
+	}
+
+	//映射
+	@Test
+	public void test5() {
+		List<String> strList = new ArrayList<>(Arrays.asList("aaa", "bbb", "ccc", "ddd", "eee"));
+
+		strList.stream()
+				.map(x -> x.toUpperCase())
+				.forEach(System.out::println);
+
+		System.out.println("----------------------------------------");
+
+		empList.stream()
+				.map(Employee::getName)
+				.forEach(System.out::println);
+
+		System.out.println("----------------------------------------");
+
+		Stream<Stream<Character>> stream = strList.stream()
+				.map(TestStreamApi::filterCharacter); //{{a,a,a},{b,b,b}}
+
+		stream.forEach(sm -> {
+			sm.forEach(System.out::println);
+		});
+
+		System.out.println("----------------------------------------");
+
+		strList.stream()
+				.flatMap(TestStreamApi::filterCharacter) //{a,a,a,b,b,b}
+				.forEach(System.out::println);
+	}
+
+	public static Stream<Character> filterCharacter(String str) {
+		List<Character> charList = new ArrayList<>();
+		for (Character ch : str.toCharArray()) {
+			charList.add(ch);
+		}
+		return charList.stream();
 	}
 }
