@@ -9,15 +9,23 @@ public class Employee {
 
     private String name;
     private Integer age;
+    private Status status;
 
     public Employee() {}
 
-    public Employee(String name, Integer age) {
+    public Employee(String name, Integer age, Status status) {
         this.age = age;
         this.name = name;
+        this.status = status;
     }
 
     public Employee(String name) {
         this.name = name;
     }
+    
+    public enum Status {
+		FREE,
+		BUSY,
+		VOCATION;
+	}
 }
