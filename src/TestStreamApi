@@ -28,7 +28,9 @@ import java.util.stream.Stream;
  * 			flatMap -- 接受一个函数作为参数，将流中的每个值都换成另一个流，然后把所有流连接成一个流。
  *
  * 		3.排序
- * 				
+ * 			sorted() -- 自然排序
+ * 			sorted(Comparator com) -- 定制排序
+ *
  * 三、终止操作（终端操作）
  *
  **/
@@ -42,7 +44,8 @@ public class TestStreamApi {
 			new Employee("阿六", 24),
 			new Employee("阿六", 24),
 			new Employee("阿六", 24),
-			new Employee("狗蛋", 25)
+			new Employee("狗蛋", 25),
+			new Employee("二愣子", 21)
 	));
 
 	//创建stream
@@ -156,5 +159,27 @@ public class TestStreamApi {
 			charList.add(ch);
 		}
 		return charList.stream();
+	}
+
+	//排序
+	@Test
+	public void test6() {
+		List<String> strList = new ArrayList<>(Arrays.asList("ccc", "aaa", "ddd", "bbb"));
+		//自然排序
+		strList.stream()
+				.sorted()
+				.forEach(System.out::println);
+
+		//定制排序
+		//先按年龄排，如果年龄一样再按姓名排
+		empList.stream()
+				.sorted((x, y) -> {
+					if (x.getAge().equals(y.getAge())) {
+						return x.getName().compareTo(y.getName());
+					} else {
+						return x.getAge().compareTo(y.getAge());
+					}
+				})
+				.forEach(System.out::println);
 	}
 }
