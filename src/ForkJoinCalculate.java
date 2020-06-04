@@ -33,7 +33,8 @@ public class ForkJoinCalculate extends RecursiveTask<Long> {
 			left.fork(); //拆分成子任务，同时压入线程队列
 
 			ForkJoinCalculate right = new ForkJoinCalculate(middle + 1, end);
-
+                        right.fork(); //拆分成子任务，同时压入线程队列
+			
 			return left.join() + right.join();
 		}
 	}
