@@ -1,3 +1,7 @@
+import org.junit.Test;
+
+import java.util.Optional;
+
 /**
  *
  *	Optional容器类的常用方法：
@@ -12,10 +16,23 @@
  *
  **/
 public class TestOptional {
-  @Test
+
+	@Test
 	public void test1() {
-		Optional<Employee> op = Optional.of(new Employee());
+		Optional<Employee> op = Optional.of(new Employee());  //为null时会抛出空指针异常
 		Employee emp = op.get();
 		System.out.println(emp);
+	}
+
+	@Test
+	public void test2() {
+		Optional<Employee> op = Optional.empty();  //抛出NoSuchElementException异常: No value present
+		System.out.println(op.get());
+	}
+
+	@Test
+	public void test3() {
+		Optional<Employee> op = Optional.of(new Employee());  //为null时会抛出NoSuchElementException异常: No value present
+		System.out.println(op.get());
 	}
 }
