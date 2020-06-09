@@ -37,7 +37,34 @@ public class TestOptional {
 			System.out.println(op.get());
 		}
 
-		Employee emp = op.orElse(new Employee("123",123, Employee.Status.FREE));
+		//Employee emp = op.orElse(new Employee("123", 123, Employee.Status.FREE));
+		Employee emp = op.orElseGet(() -> new Employee());
 		System.out.println(emp);
+	}
+
+	@Test
+	public void test4() {
+		Optional<Employee> op = Optional.ofNullable(new Employee("123", 123, Employee.Status.FREE));
+//		Optional<String> str = op.map(e -> e.getName());
+//		System.out.println(str.get());
+
+		Optional<String> str2 = op.flatMap(e -> Optional.of(e.getName()));
+		System.out.println(str2.get());
+	}
+
+	//旧的写法
+	@Test
+	public void test5() {
+		Man man = new Man();
+		String name = getGodnessName(man);
+		System.out.println(name);
+	}
+
+	//获取Man中Godness的名字
+	public String getGodnessName(Man man) {
+		if (man != null && man.getGodness() != null ) {
+			return man.getGodness().getName();
+		}
+		return "默认值";
 	}
 }
