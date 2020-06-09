@@ -60,7 +60,8 @@ public class TestOptional {
 		System.out.println(name);
 
 		//新的写法
-		Optional<NewMan> op = Optional.ofNullable(new NewMan());
+		Optional<Godness> gn = Optional.ofNullable(new Godness("123"));
+		Optional<NewMan> op = Optional.ofNullable(new NewMan(gn));
 		String str = getGodnessName2(op);
 		System.out.println(str);
 	}
