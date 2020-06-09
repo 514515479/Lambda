@@ -32,7 +32,12 @@ public class TestOptional {
 
 	@Test
 	public void test3() {
-		Optional<Employee> op = Optional.of(new Employee());  //为null时会抛出NoSuchElementException异常: No value present
-		System.out.println(op.get());
+		Optional<Employee> op = Optional.ofNullable(null);  //为null时会抛出NoSuchElementException异常: No value present
+		if (op.isPresent()) {  //如果有值就获取
+			System.out.println(op.get());
+		}
+
+		Employee emp = op.orElse(new Employee("123",123, Employee.Status.FREE));
+		System.out.println(emp);
 	}
 }
