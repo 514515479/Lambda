@@ -52,13 +52,14 @@ public class TestOptional {
 		System.out.println(str2.get());
 	}
 
-	//旧的写法
 	@Test
 	public void test5() {
+		//旧的写法
 		Man man = new Man();
 		String name = getGodnessName(man);
 		System.out.println(name);
 
+		//新的写法
 		Optional<NewMan> op = Optional.ofNullable(new NewMan());
 		String str = getGodnessName2(op);
 		System.out.println(str);
