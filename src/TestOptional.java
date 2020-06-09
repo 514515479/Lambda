@@ -58,13 +58,25 @@ public class TestOptional {
 		Man man = new Man();
 		String name = getGodnessName(man);
 		System.out.println(name);
+
+		Optional<NewMan> op = Optional.ofNullable(new NewMan());
+		String str = getGodnessName2(op);
+		System.out.println(str);
 	}
 
-	//获取Man中Godness的名字
+	//获取Man中Godness的名字（旧的）
 	public String getGodnessName(Man man) {
 		if (man != null && man.getGodness() != null ) {
 			return man.getGodness().getName();
 		}
 		return "默认值";
+	}
+
+	//获取NewMan中Godness的名字（新的）
+	public String getGodnessName2(Optional<NewMan> newMan) {
+		return newMan.orElse(new NewMan())
+				.getGodness()
+				.orElse(new Godness("默认值"))
+				.getName();
 	}
 }
