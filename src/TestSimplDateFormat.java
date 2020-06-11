@@ -1,3 +1,4 @@
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -6,17 +7,21 @@ import java.util.concurrent.*;
 
 public class TestSimplDateFormat {
 
-	public static void main(String[] args) throws ExecutionException, InterruptedException {
+	public static void main(String[] args) throws ExecutionException, InterruptedException, ParseException {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
-		Callable<Date> task = () ->  sdf.parse("2020-06-12");
+		//线程不安全
+		//Callable<Date> task = () ->  sdf.parse("2020-06-12");
 		/*Callable<Date> task = new Callable<Date>() {
 			@Override
 			public Date call() throws Exception {
 				return sdf.parse("2020-06-12");
 			}
 		};*/
+
+		//线程安全
+		Callable<Date> task = () -> DateFormatThreadLocal.convert("2020-06-12");
 
 		List<Future<Date>> list = new ArrayList<>();
 
