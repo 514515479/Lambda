@@ -34,5 +34,7 @@ public class TestSimplDateFormat {
 		for (Future<Date> result : list) {
 			System.out.println(result.get());
 		}
+		
+		pool.shutdown();
 	}
 }
