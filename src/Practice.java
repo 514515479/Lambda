@@ -14,10 +14,10 @@ public class Practice {
     @Test
     public void test1() {
         List<Employee> list = Arrays.asList(
-                new Employee("张三", 26),
-                new Employee("李四", 24),
-                new Employee("王五", 23),
-                new Employee("阿六", 25)
+                new Employee("张三", 26, Employee.Status.FREE),
+                new Employee("李四", 24, Employee.Status.FREE),
+                new Employee("王五", 23, Employee.Status.FREE),
+                new Employee("阿六", 25, Employee.Status.FREE)
         );
 
         Collections.sort(list, (x, y) -> {

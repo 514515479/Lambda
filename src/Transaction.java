@@ -10,9 +10,7 @@ public class Transaction {
 	private int year;
 	private int value;
 
-	public Transaction(){
-
-	}
+	public Transaction(){}
 
 	public Transaction(Trader trade, int year, int value){
 		this.trade = trade;

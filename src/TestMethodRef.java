@@ -51,7 +51,7 @@ public class TestMethodRef {
 
         System.out.println("---------------------------------------");
 
-        Employee emp = new Employee("张三", 25);
+        Employee emp = new Employee("张三", 25, Employee.Status.FREE);
         Supplier<String> sup1 = () -> emp.getName();
         System.out.println(sup1.get());
 
