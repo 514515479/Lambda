@@ -1,9 +1,6 @@
 import org.junit.Test;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.OffsetDateTime;
-import java.time.ZoneOffset;
+import java.time.*;
 
 /**
  * @Author: tobi
@@ -49,5 +46,37 @@ public class TestLocalDateTime {
         //运算 +30秒
         Instant ins2 = Instant.ofEpochSecond(30);
         System.out.println(ins2);
+    }
+
+    //  3.时间间隔
+    //    Duration: 时间之间的间隔
+    //    Period: 日期之间的间隔
+    @Test
+    public void test3() throws InterruptedException {
+        Instant ins1 = Instant.now();
+        Thread.sleep(1000);
+        Instant ins2 = Instant.now();
+
+        Duration duration1 = Duration.between(ins1, ins2);
+        System.out.println(duration1.getSeconds()); //秒
+        System.out.println(duration1.toMillis()); //毫秒
+
+        System.out.println("---------------------------------");
+
+        LocalTime lt1 = LocalTime.now();
+        Thread.sleep(1000);
+        LocalTime lt2 = LocalTime.now();
+        System.out.println(Duration.between(lt1, lt2).toMillis()); //毫秒
+
+        System.out.println("---------------------------------");
+
+        LocalDate ld1 = LocalDate.of(2015, 1, 1);
+        LocalDate ld2 = LocalDate.now();
+
+        Period period = Period.between(ld1, ld2);
+        System.out.println(period.getYears());
+        System.out.println(period.getMonths());
+        System.out.println(period.getDays());
+
     }
 }
