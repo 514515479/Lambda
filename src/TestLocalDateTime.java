@@ -1,6 +1,8 @@
 import org.junit.Test;
 
 import java.time.*;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 
 /**
  * @Author: tobi
@@ -78,5 +80,34 @@ public class TestLocalDateTime {
         System.out.println(period.getMonths());
         System.out.println(period.getDays());
 
+    }
+
+    //  4.时间校正器
+    @Test
+    public void test4() {
+        //获取下一个周日
+        LocalDateTime ldt = LocalDateTime.now()
+                .with(TemporalAdjusters.next(DayOfWeek.SUNDAY));
+        System.out.println(ldt);
+
+        //with 修改日期 日期改为10号
+        LocalDateTime ldt2 = ldt.withDayOfMonth(10);
+        System.out.println(ldt2);
+
+        //自定义：下一个工作日
+        LocalDateTime ldt5 = LocalDateTime.now();
+        LocalDateTime ldt6 = ldt5.with((l) -> {
+            LocalDateTime ldtTmp = (LocalDateTime) l;
+            DayOfWeek dow = ldtTmp.getDayOfWeek();
+            if (dow.equals(DayOfWeek.FRIDAY)) {
+                return ldtTmp.plusDays(3);
+            } else if (dow.equals(DayOfWeek.SATURDAY)) {
+                return ldtTmp.plusDays(2);
+            } else {
+                return ldtTmp.plusDays(1);
+            }
+        });
+
+        System.out.println(ldt6);
     }
 }
