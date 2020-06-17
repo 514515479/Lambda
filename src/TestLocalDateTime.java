@@ -1,8 +1,11 @@
 import org.junit.Test;
 
+import java.sql.SQLOutput;
 import java.time.*;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.TemporalAdjuster;
 import java.time.temporal.TemporalAdjusters;
+import java.util.Set;
 
 /**
  * @Author: tobi
@@ -109,5 +112,26 @@ public class TestLocalDateTime {
         });
 
         System.out.println(ldt6);
+    }
+
+    //  5.DateTimeFormatter: 日期/时间格式化
+    @Test
+    public void test5() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDateTime ldt = LocalDateTime.now();
+        String str = dtf.format(ldt);
+        System.out.println(str);
+
+        String date = "2020-06-17 00:00:00";
+        LocalDateTime newDate = ldt.parse(date, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        System.out.println(newDate);
+    }
+
+    //  6.ZoneDate ZoneTime ZoneDateTime
+    @Test
+    public void Test6() {
+        //返回所有时区
+        Set<String> set = ZoneId.getAvailableZoneIds();
+        set.forEach(System.out::println);
     }
 }
